@@ -1,0 +1,105 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE, T } from '../data/content.js';
+---
+
+<Base
+  title="Kontakt — DOBOJO · Atelier Kerzers"
+  description="Kontakt zu Doris Boschung-Johner: Nachricht schreiben oder das Atelier an der Fräschelsgasse 24 in Kerzers nach Vereinbarung besuchen."
+  active="kontakt"
+>
+  <div class="kontakt-page">
+    <h1 class="page-title" data-reveal data-i18n="kH">{T.kH}</h1>
+    <div class="bluebar center-bar" data-reveal style="margin:28px auto 0"></div>
+
+    <div class="kontakt-inner">
+      <div class="kontakt-lead" data-reveal data-i18n="kLead">{T.kLead}</div>
+
+      <form class="blue-box kontakt-form-box" data-reveal data-contact-form data-form-key={SITE.formKey} data-mailto={SITE.email} novalidate>
+        <div class="form-h" data-i18n="kFormH">{T.kFormH}</div>
+        <div class="form-col">
+          <div class="form-2col">
+            <div class="form-field">
+              <label for="f-name" data-i18n="kName">{T.kName}</label>
+              <input id="f-name" name="name" type="text" required placeholder={T.kNamePh} data-i18n-ph="kNamePh" />
+            </div>
+            <div class="form-field">
+              <label for="f-mail" data-i18n="kMail">{T.kMail}</label>
+              <input id="f-mail" name="email" type="email" required placeholder={T.kMailPh} data-i18n-ph="kMailPh" />
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="f-msg" data-i18n="kMsg">{T.kMsg}</label>
+            <textarea id="f-msg" name="message" rows="5" required placeholder={T.kMsgPh} data-i18n-ph="kMsgPh"></textarea>
+          </div>
+          <button class="form-send" type="submit"><span data-i18n="kSend">{T.kSend}</span> →</button>
+          <p class="form-status" data-form-status></p>
+        </div>
+      </form>
+
+      <img class="kontakt-photo" data-reveal src={SITE.kontaktPhoto} alt="Atelier in Kerzers" width="1200" height="797" loading="lazy" />
+
+      <div class="kontakt-rows" data-reveal>
+        <div class="kontakt-row">
+          <span class="k" data-i18n="kAtelier">{T.kAtelier}</span>
+          <span class="v">{SITE.addressLine1}<br />{SITE.addressLine2}</span>
+        </div>
+        <div class="kontakt-row">
+          <span class="k" data-i18n="kMail">{T.kMail}</span>
+          <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+        </div>
+        <div class="kontakt-row">
+          <span class="k" data-i18n="kInsta">{T.kInsta}</span>
+          <a href={`https://www.instagram.com/${SITE.instagram}`} target="_blank" rel="noopener">@{SITE.instagram}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Submit via Web3Forms when a key is configured (CMS: Einstellungen → formKey);
+    // otherwise fall back to a pre-filled mailto. Same pattern as the Casa d'Italia join form.
+    const form = document.querySelector('[data-contact-form]') as HTMLFormElement | null;
+    if (form) {
+      const status = form.querySelector('[data-form-status]') as HTMLElement;
+      const key = form.dataset.formKey || '';
+      const mailto = form.dataset.mailto || '';
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!form.reportValidity()) return;
+        const fd = new FormData(form);
+        const name = String(fd.get('name') || '');
+        const email = String(fd.get('email') || '');
+        const message = String(fd.get('message') || '');
+        const lang = document.documentElement.lang || 'de';
+        const say = (k: string) => {
+          const dict = (window as any).__DOBOJO_I18N?.[lang] || {};
+          return dict[k] || k;
+        };
+        if (key) {
+          try {
+            const r = await fetch('https://api.web3forms.com/submit', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+              body: JSON.stringify({ access_key: key, subject: 'Nachricht über dobojo.ch', name, email, message }),
+            });
+            const data = await r.json();
+            status.classList.add('show');
+            if (data.success) {
+              status.textContent = say('kSent');
+              form.reset();
+            } else {
+              status.textContent = say('kError');
+            }
+          } catch {
+            status.classList.add('show');
+            status.textContent = say('kError');
+          }
+        } else {
+          const body = encodeURIComponent(`${message}\n\n${name}\n${email}`);
+          window.location.href = `mailto:${mailto}?subject=${encodeURIComponent('Nachricht über dobojo.ch')}&body=${body}`;
+        }
+      });
+    }
+  </script>
+</Base>

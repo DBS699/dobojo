@@ -1,0 +1,40 @@
+{
+  "partners": [
+    {
+      "name": "ViZion",
+      "url": "https://www.vizion-coaching.ch",
+      "tag_de": "Coaching & Beratung",
+      "tag_en": "Coaching & consulting",
+      "tag_fr": "Coaching & conseil",
+      "tag_it": "Coaching & consulenza",
+      "desc_de": "ViZion begleitet Menschen bei Burnout-Prävention und Neuorientierung — geführt von Viviane Zogg.",
+      "desc_en": "ViZion supports people with burnout prevention and reorientation — led by Viviane Zogg.",
+      "desc_fr": "ViZion accompagne les personnes dans la prévention du burnout et la réorientation — dirigé par Viviane Zogg.",
+      "desc_it": "ViZion accompagna le persone nella prevenzione del burnout e nel riorientamento — guidato da Viviane Zogg."
+    },
+    {
+      "name": "coolinarik",
+      "url": "https://www.coolinarik.ch",
+      "tag_de": "Interkulturelles Kochen & Essen",
+      "tag_en": "Intercultural cooking & dining",
+      "tag_fr": "Cuisine interculturelle",
+      "tag_it": "Cucina interculturale",
+      "desc_de": "coolinarik bringt Menschen und Kulturen am Esstisch zusammen.",
+      "desc_en": "coolinarik brings people and cultures together around the table.",
+      "desc_fr": "coolinarik réunit les gens et les cultures autour de la table.",
+      "desc_it": "coolinarik unisce persone e culture a tavola."
+    },
+    {
+      "name": "Eastwood Impact AI",
+      "url": "https://www.eastwood-impact.ch",
+      "tag_de": "KI-Automatisierung für KMU",
+      "tag_en": "AI automation for SMEs",
+      "tag_fr": "Automatisation IA pour PME",
+      "tag_it": "Automazione IA per PMI",
+      "desc_de": "Eastwood Impact AI unterstützt kleine und mittlere Unternehmen bei der Automatisierung mit künstlicher Intelligenz.",
+      "desc_en": "Eastwood Impact AI helps small and medium businesses automate with artificial intelligence.",
+      "desc_fr": "Eastwood Impact AI aide les petites et moyennes entreprises à s’automatiser grâce à l’intelligence artificielle.",
+      "desc_it": "Eastwood Impact AI aiuta le piccole e medie imprese ad automatizzarsi con l’intelligenza artificiale."
+    }
+  ]
+}

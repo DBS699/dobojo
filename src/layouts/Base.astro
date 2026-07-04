@@ -1,0 +1,177 @@
+---
+import '../styles/global.css';
+import { I18N, DEFAULT_LANG, LANGS, SITE, T } from '../data/content.js';
+
+interface Props {
+  title: string;
+  description: string;
+  active?: string;
+}
+const { title, description, active = '' } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(SITE.collage2, Astro.site);
+
+const NAV = [
+  { key: 'start', href: '/', i18n: 'navStart', label: T.navStart },
+  { key: 'werke', href: '/werke', i18n: 'navWerke', label: T.navWerke },
+  { key: 'about', href: '/ueber-mich', i18n: 'navAbout', label: T.navAbout },
+  { key: 'kontakt', href: '/kontakt', i18n: 'navKontakt', label: T.navKontakt },
+  { key: 'partner', href: '/partnerinnen', i18n: 'navPartner', label: T.navPartner },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Doris Boschung-Johner',
+  jobTitle: 'Künstlerin — Malerei, Keramik & Skulptur',
+  email: `mailto:${SITE.email}`,
+  url: Astro.site?.toString(),
+  sameAs: [`https://www.instagram.com/${SITE.instagram}`],
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: SITE.addressLine1,
+    addressLocality: 'Kerzers',
+    postalCode: '3210',
+    addressCountry: 'CH',
+  },
+};
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#D6380C" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Gloock&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="page-frame" aria-hidden="true"></div>
+
+    <header class="nav">
+      <a class="nav-brand" href="/">
+        <span class="wm">DOBOJO</span>
+        <span class="sub">Doris Boschung-Johner</span>
+      </a>
+      <nav class="nav-links">
+        {NAV.map((n) => (
+          <a href={n.href} data-i18n={n.i18n} aria-current={active === n.key ? 'page' : undefined}>{n.label}</a>
+        ))}
+        <span class="lang-pill">
+          {LANGS.map((l) => (
+            <button type="button" data-lang-btn={l}>{l.toUpperCase()}</button>
+          ))}
+        </span>
+      </nav>
+      <button class="burger" type="button" data-burger aria-label="Menü">
+        <span></span><span></span><span></span>
+      </button>
+    </header>
+
+    <div class="mobile-menu">
+      <button class="close" type="button" data-menu-close aria-label="Schliessen">×</button>
+      {NAV.map((n) => (
+        <a href={n.href} data-i18n={n.i18n}>{n.label}</a>
+      ))}
+      <span class="lang-pill">
+        {LANGS.map((l) => (
+          <button type="button" data-lang-btn={l}>{l.toUpperCase()}</button>
+        ))}
+      </span>
+    </div>
+
+    <slot />
+
+    <footer class="footer">
+      <span>{SITE.addressLine1} · {SITE.addressLine2.replace(', Schweiz', '')}</span>
+      <span class="group">
+        <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+        <a href={`https://www.instagram.com/${SITE.instagram}`} target="_blank" rel="noopener">Instagram</a>
+      </span>
+      <span class="group">
+        <span>© 2026 Doris Boschung-Johner</span>
+        <span class="dim"><span data-i18n="footImp">{T.footImp}</span> · <span data-i18n="footDat">{T.footDat}</span></span>
+      </span>
+    </footer>
+
+    <!-- Live language switching (no reload) — same pattern as the T-object in the prototype. -->
+    <script is:inline define:vars={{ I18N, DEFAULT_LANG }}>
+      (function () {
+        const resolve = (obj, path) =>
+          path.split('.').reduce((o, k) => (o == null ? undefined : o[Array.isArray(o) ? Number(k) : k]), obj);
+
+        window.__DOBOJO_I18N = I18N;
+        const STORE_KEY = 'dobojo-lang';
+        const valid = Object.keys(I18N);
+        let lang = localStorage.getItem(STORE_KEY);
+        if (!valid.includes(lang)) lang = DEFAULT_LANG;
+
+        function apply(next) {
+          lang = next;
+          const dict = I18N[lang];
+          document.documentElement.lang = lang;
+          document.querySelectorAll('[data-i18n]').forEach((el) => {
+            const v = resolve(dict, el.getAttribute('data-i18n'));
+            if (typeof v === 'string') el.textContent = v;
+          });
+          document.querySelectorAll('[data-i18n-ph]').forEach((el) => {
+            const v = resolve(dict, el.getAttribute('data-i18n-ph'));
+            if (typeof v === 'string') el.setAttribute('placeholder', v);
+          });
+          document.querySelectorAll('[data-lang-btn]').forEach((b) => {
+            b.setAttribute('aria-current', b.getAttribute('data-lang-btn') === lang ? 'true' : 'false');
+          });
+          try { localStorage.setItem(STORE_KEY, lang); } catch (e) {}
+          window.dispatchEvent(new CustomEvent('dobojo:lang', { detail: lang }));
+        }
+
+        document.querySelectorAll('[data-lang-btn]').forEach((b) => {
+          b.addEventListener('click', () => apply(b.getAttribute('data-lang-btn')));
+        });
+
+        const burger = document.querySelector('[data-burger]');
+        const closeBtn = document.querySelector('[data-menu-close]');
+        if (burger) burger.addEventListener('click', () => document.body.classList.add('menu-open'));
+        if (closeBtn) closeBtn.addEventListener('click', () => document.body.classList.remove('menu-open'));
+        document.querySelectorAll('.mobile-menu a').forEach((a) =>
+          a.addEventListener('click', () => document.body.classList.remove('menu-open'))
+        );
+        const mq = window.matchMedia('(min-width: 761px)');
+        mq.addEventListener('change', (e) => { if (e.matches) document.body.classList.remove('menu-open'); });
+
+        apply(lang);
+      })();
+    </script>
+
+    <script>
+      import { initMotion, setupNavigation, refreshTriggers } from '../scripts/motion.js';
+      initMotion();
+      setupNavigation();
+      // text lengths change with language → recalc pinned distances
+      window.addEventListener('dobojo:lang', () => refreshTriggers());
+      window.addEventListener('load', () => refreshTriggers());
+    </script>
+  </body>
+</html>

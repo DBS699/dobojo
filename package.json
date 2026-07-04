@@ -1,0 +1,19 @@
+{
+  "name": "dobojo",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "DOBOJO — Doris Boschung-Johner · Malerei, Keramik & Skulptur (dobojo.ch redesign)",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
+    "astro": "^5.5.0",
+    "gsap": "^3.12.5"
+  }
+}

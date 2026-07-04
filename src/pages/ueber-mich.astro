@@ -1,0 +1,84 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE, EX_SOLO, EX_GROUP, T } from '../data/content.js';
+
+// vita stations + the "Heute" closer (per-language via data-i18n paths)
+const CV_ITEMS = T.vita.concat([{ y: T.cvNowY, x: T.cvNowX }]);
+---
+
+<Base
+  title="Über mich — DOBOJO · Doris Boschung-Johner"
+  description="Doris Boschung-Johner — Künstlerin aus Kerzers. Lebenslauf, Vita und Ausstellungen: von der Töpferlehre bei Godi Gerber bis zum eigenen Atelier."
+  active="about"
+>
+  <div class="about-page">
+    <div class="about-stage" data-about-stage>
+      <div class="about-intro" data-about-intro>
+        <h1 class="page-title" data-reveal data-i18n="aH">{T.aH}</h1>
+        <div class="bluebar about-title-bar" data-reveal></div>
+        <div class="about-grid">
+          <div class="about-side left" data-reveal>
+            <img src={SITE.aboutPortrait} alt="Doris Boschung-Johner" width="880" height="1100" />
+          </div>
+          <div class="about-center">
+            <div class="about-lead" data-reveal data-i18n="aLead">{T.aLead}</div>
+            <p class="about-body" data-reveal data-i18n="aBody1">{T.aBody1}</p>
+            <p class="about-body" data-reveal data-i18n="aBody2">{T.aBody2}</p>
+            <div class="about-minibar" data-reveal></div>
+            <div class="about-cta" data-reveal>
+              <span class="note" data-i18n="aCta">{T.aCta}</span>
+              <a class="pill-btn pill-blue" href="/kontakt"><span data-i18n="aCtaBtn">{T.aCtaBtn}</span> →</a>
+            </div>
+          </div>
+          <div class="about-side right" data-reveal>
+            <img src={SITE.aboutAtelier} alt="Atelier in Kerzers" width="800" height="531" />
+          </div>
+        </div>
+      </div>
+
+      <div class="cv-panel" data-cv>
+        <div class="cv-head">
+          <div class="cv-title" data-i18n="cvH">{T.cvH}</div>
+          <div class="bluebar"></div>
+        </div>
+        <div class="cv-track" data-cv-track>
+          {CV_ITEMS.map((c, i) => (
+            <div class="cv-item" data-cv-item>
+              {i === CV_ITEMS.length - 1
+                ? <div class="y" data-i18n="cvNowY">{c.y}</div>
+                : <div class="y">{c.y}</div>}
+              {i === CV_ITEMS.length - 1
+                ? <div class="x" data-i18n="cvNowX">{c.x}</div>
+                : <div class="x" data-i18n={`vita.${i}.x`}>{c.x}</div>}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div class="ex-grid">
+      <div class="ex-col" data-reveal>
+        <div class="ex-h" data-i18n="exSoloH">{T.exSoloH}</div>
+        <div>
+          {EX_SOLO.map((e) => (
+            <div class="ex-row">
+              <span class="y">{e.y}</span>
+              <span class="x">{e.x}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="ex-col" data-reveal>
+        <div class="ex-h" data-i18n="exGroupH">{T.exGroupH}</div>
+        <div>
+          {EX_GROUP.map((e) => (
+            <div class="ex-row">
+              <span class="y">{e.y}</span>
+              <span class="x">{e.x}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</Base>

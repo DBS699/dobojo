@@ -1,0 +1,188 @@
+# Sveltia CMS Konfiguration — DOBOJO (dobojo.ch)
+# ─────────────────────────────────────────────────────────────────────────────
+# Änderungen hier im /admin werden ins GitHub-Repo committet;
+# Vercel baut die Seite neu → nach ~1 Minute live.
+# Setup-Schritte: siehe site/README.md (OAuth-App + Vercel-Env-Variablen).
+
+backend:
+  name: github
+  repo: DBS699/dobojo             # GitHub owner/repo
+  branch: main
+  base_url: https://dobojo.vercel.app   # OAuth handler lives here (api/auth)
+  auth_endpoint: /api/auth
+
+site_url: https://dobojo.vercel.app
+display_url: https://dobojo.vercel.app
+
+# Hochgeladene Bilder werden ins Repo committet und von hier ausgeliefert.
+media_folder: "public/assets/uploads"
+public_folder: "/assets/uploads"
+
+locale: de
+
+collections:
+  - name: werke
+    label: "Werke (Galerie)"
+    icon: imagesmode
+    files:
+      - name: werke
+        label: "Werke — Malerei & Keramik"
+        file: "src/data/werke.json"
+        fields:
+          - name: malerei
+            label: "Malerei"
+            label_singular: "Bild"
+            widget: list
+            summary: "{{fields.title}} {{fields.image}}"
+            fields:
+              - { name: image, label: "Bild", widget: image }
+              - { name: title, label: "Titel (leer = «Ohne Titel»)", widget: string, required: false, default: "" }
+              - { name: medium, label: "Technik (leer = «Acryl / Öl»)", widget: string, required: false, default: "" }
+          - name: keramik
+            label: "Keramik & Skulpturen"
+            label_singular: "Objekt"
+            widget: list
+            summary: "{{fields.title}} {{fields.image}}"
+            fields:
+              - { name: image, label: "Bild", widget: image }
+              - { name: title, label: "Titel (leer = «Ohne Titel»)", widget: string, required: false, default: "" }
+              - { name: medium, label: "Technik (leer = «Ton / Steinzeug»)", widget: string, required: false, default: "" }
+
+  - name: seitenbilder
+    label: "Seiten-Bilder & Kontakt"
+    icon: photo_camera
+    files:
+      - name: site
+        label: "Seiten-Bilder & Kontakt"
+        file: "src/data/site.json"
+        fields:
+          - { name: collage1, label: "Startseite — Collage links", widget: image }
+          - { name: collage2, label: "Startseite — Collage Mitte (gross)", widget: image }
+          - { name: collage3, label: "Startseite — Collage rechts", widget: image }
+          - { name: cardMalerei, label: "Startseite — Karte «Malerei»", widget: image }
+          - { name: cardKeramik, label: "Startseite — Karte «Keramik»", widget: image }
+          - { name: teaserPhoto, label: "Startseite — Foto «Über mich»", widget: image }
+          - { name: aboutPortrait, label: "Über mich — Foto links", widget: image }
+          - { name: aboutAtelier, label: "Über mich — Foto rechts (Atelier)", widget: image }
+          - { name: kontaktPhoto, label: "Kontakt — Atelier-Foto", widget: image }
+          - { name: email, label: "E-Mail-Adresse", widget: string }
+          - { name: instagram, label: "Instagram-Name (ohne @)", widget: string }
+          - { name: addressLine1, label: "Adresse — Strasse", widget: string }
+          - { name: addressLine2, label: "Adresse — Ort", widget: string }
+          - name: formKey
+            label: "Web3Forms-Schlüssel (Kontaktformular)"
+            widget: string
+            required: false
+            default: ""
+            hint: "Leer = Formular öffnet das E-Mail-Programm. Gratis-Schlüssel auf web3forms.com erstellen, dann werden Nachrichten direkt per E-Mail zugestellt."
+
+  - name: texte
+    label: "Texte"
+    icon: edit_note
+    files:
+      - name: texts
+        label: "Texte (4 Sprachen)"
+        file: "src/data/texts.json"
+        fields:
+          - name: de
+            label: "Deutsch"
+            widget: object
+            fields: &TEXT_FIELDS
+              - { name: credo, label: "Credo (Startseite oben)", widget: string }
+              - { name: heroT1, label: "Startseite — «Die Kunst von»", widget: string }
+              - { name: teaserLead, label: "Startseite — Über-mich-Zitat", widget: text }
+              - { name: teaserBody, label: "Startseite — Über-mich-Text", widget: text }
+              - { name: wIntro, label: "Werke — Einleitung", widget: text }
+              - { name: aLead, label: "Über mich — Leitsatz", widget: text }
+              - { name: aBody1, label: "Über mich — Absatz 1", widget: text }
+              - { name: aBody2, label: "Über mich — Absatz 2", widget: text }
+              - { name: aCta, label: "Über mich — Hinweis (Besichtigung)", widget: string }
+              - { name: cvNowX, label: "Lebenslauf — «Heute»-Text", widget: string }
+              - { name: kLead, label: "Kontakt — Einleitung", widget: text }
+              - { name: pLead, label: "Partner — Einleitung", widget: text }
+              - { name: pCta, label: "Partner — Schlussfrage", widget: string }
+          - name: en
+            label: "English"
+            widget: object
+            collapsed: true
+            fields: *TEXT_FIELDS
+          - name: fr
+            label: "Français"
+            widget: object
+            collapsed: true
+            fields: *TEXT_FIELDS
+          - name: it
+            label: "Italiano"
+            widget: object
+            collapsed: true
+            fields: *TEXT_FIELDS
+
+  - name: lebenslauf
+    label: "Lebenslauf"
+    icon: timeline
+    files:
+      - name: vita
+        label: "Lebenslauf-Stationen"
+        file: "src/data/vita.json"
+        fields:
+          - name: vita
+            label: "Stationen"
+            label_singular: "Station"
+            widget: list
+            summary: "{{fields.y}} — {{fields.de}}"
+            fields:
+              - { name: y, label: "Jahr", widget: string }
+              - { name: de, label: "Text (Deutsch)", widget: text }
+              - { name: en, label: "Text (English)", widget: text, required: false, default: "" }
+              - { name: fr, label: "Text (Français)", widget: text, required: false, default: "" }
+              - { name: it, label: "Text (Italiano)", widget: text, required: false, default: "" }
+
+  - name: ausstellungen
+    label: "Ausstellungen"
+    icon: museum
+    files:
+      - name: exhibitions
+        label: "Ausstellungen"
+        file: "src/data/exhibitions.json"
+        fields:
+          - name: solo
+            label: "Einzelausstellungen"
+            label_singular: "Ausstellung"
+            widget: list
+            summary: "{{fields.y}} — {{fields.x}}"
+            fields:
+              - { name: y, label: "Jahr", widget: string }
+              - { name: x, label: "Ort / Beschreibung", widget: string }
+          - name: group
+            label: "Gemeinschaftsausstellungen"
+            label_singular: "Ausstellung"
+            widget: list
+            summary: "{{fields.y}} — {{fields.x}}"
+            fields:
+              - { name: y, label: "Jahr", widget: string }
+              - { name: x, label: "Ort / Beschreibung", widget: string }
+
+  - name: partner
+    label: "Partner*innen"
+    icon: handshake
+    files:
+      - name: partners
+        label: "Partner*innen"
+        file: "src/data/partners.json"
+        fields:
+          - name: partners
+            label: "Partner*innen"
+            label_singular: "Partner*in"
+            widget: list
+            summary: "{{fields.name}}"
+            fields:
+              - { name: name, label: "Name", widget: string }
+              - { name: url, label: "Website (https://…)", widget: string }
+              - { name: tag_de, label: "Stichwort (Deutsch)", widget: string }
+              - { name: tag_en, label: "Stichwort (English)", widget: string, required: false, default: "" }
+              - { name: tag_fr, label: "Stichwort (Français)", widget: string, required: false, default: "" }
+              - { name: tag_it, label: "Stichwort (Italiano)", widget: string, required: false, default: "" }
+              - { name: desc_de, label: "Beschreibung (Deutsch)", widget: text }
+              - { name: desc_en, label: "Beschreibung (English)", widget: text, required: false, default: "" }
+              - { name: desc_fr, label: "Beschreibung (Français)", widget: text, required: false, default: "" }
+              - { name: desc_it, label: "Beschreibung (Italiano)", widget: text, required: false, default: "" }

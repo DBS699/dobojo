@@ -1,0 +1,119 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE, T } from '../data/content.js';
+---
+
+<Base
+  title="DOBOJO — Doris Boschung-Johner · Malerei, Keramik & Skulptur"
+  description="Die Kunst von Doris Boschung-Johner: abstrakte Malerei, Keramik und Skulpturen aus dem Atelier in Kerzers. Alle Werke auf Anfrage zu besichtigen."
+  active="start"
+>
+  <section class="hero">
+    <div class="hero-top">
+      <span class="hero-side">Atelier Kerzers — CH</span>
+      <span class="credo" data-credo data-i18n="credo">{T.credo}</span>
+      <span class="hero-side right">EST. 2000</span>
+    </div>
+
+    <div class="wordmark-center">
+      <div class="wordmark-outer">
+        <div class="wordmark" aria-label="DOBOJO">
+          <span>D</span><span>O</span><span>B</span><span>O</span><span>J</span><span>O</span>
+        </div>
+        <svg class="hero-flower" data-flower width="58" height="96" viewBox="0 0 58 96" fill="none" aria-hidden="true">
+          <ellipse cx="29" cy="91" rx="20" ry="4.5" fill="rgba(22,20,15,.4)"></ellipse>
+          <path d="M29 90 C29 72 27 56 29 36" stroke="#16140f" stroke-width="3.5" stroke-linecap="round" fill="none"></path>
+          <path d="M28 70 C18 66 14 58 13 50 C24 52 28 60 29 68 Z" fill="#16140f"></path>
+          <path d="M30 78 C40 74 44 68 46 60 C35 62 30 70 29 76 Z" fill="#16140f"></path>
+          <g>
+            <ellipse cx="29" cy="15" rx="6.5" ry="11" fill="#FAF6EC"></ellipse>
+            <ellipse cx="29" cy="15" rx="6.5" ry="11" fill="#FAF6EC" transform="rotate(72 29 27)"></ellipse>
+            <ellipse cx="29" cy="15" rx="6.5" ry="11" fill="#FAF6EC" transform="rotate(144 29 27)"></ellipse>
+            <ellipse cx="29" cy="15" rx="6.5" ry="11" fill="#FAF6EC" transform="rotate(216 29 27)"></ellipse>
+            <ellipse cx="29" cy="15" rx="6.5" ry="11" fill="#FAF6EC" transform="rotate(288 29 27)"></ellipse>
+            <circle cx="29" cy="27" r="7" fill="#35A9CC"></circle>
+          </g>
+        </svg>
+        <svg class="hero-bird" data-bird width="54" height="46" viewBox="0 0 54 46" fill="none" aria-hidden="true">
+          <path d="M12 22 L1 13 L6 24 L1 33 Z" fill="#16140f"></path>
+          <ellipse cx="27" cy="25" rx="17" ry="12" fill="#16140f"></ellipse>
+          <circle cx="41" cy="14" r="8.5" fill="#16140f"></circle>
+          <circle cx="44" cy="12" r="1.8" fill="#FAF6EC"></circle>
+          <path d="M49 13 L54 15.5 L49 18.5 Z" fill="#35A9CC"></path>
+          <path data-wing d="M20 21 C28 15 37 15 41 19 C35 27 27 29 19 27 Z" fill="#35A9CC"></path>
+          <path d="M23 36 L23 44 M31 36 L31 44" stroke="#16140f" stroke-width="2.5" stroke-linecap="round"></path>
+        </svg>
+      </div>
+    </div>
+    <div class="bluebar center-bar" data-reveal></div>
+
+    <div class="collage">
+      <img class="c1" data-reveal src={SITE.collage1} alt="Malerei von Doris Boschung-Johner" width="600" height="830" loading="eager" />
+      <div>
+        <img data-reveal src={SITE.collage2} alt="Malerei von Doris Boschung-Johner" width="1100" height="692" loading="eager" />
+        <div class="collage-mid-text" data-reveal>
+          <div class="kicker" data-i18n="kicker">{T.kicker}</div>
+          <div class="lead"><span data-i18n="heroT1">{T.heroT1}</span><br />Doris Boschung-Johner</div>
+          <a class="pill-btn pill-cream" href="/werke" data-i18n="werkeAll">{T.werkeAll}</a>
+        </div>
+      </div>
+      <img class="c3" data-reveal src={SITE.collage3} alt="Malerei von Doris Boschung-Johner" width="600" height="786" loading="eager" />
+    </div>
+  </section>
+
+  <div class="ticker-band">
+    <div class="ticker" data-ticker>
+      <span><span data-i18n="ticker">{T.ticker}</span><span data-i18n="ticker">{T.ticker}</span><span data-i18n="ticker">{T.ticker}</span></span>
+      <span><span data-i18n="ticker">{T.ticker}</span><span data-i18n="ticker">{T.ticker}</span><span data-i18n="ticker">{T.ticker}</span></span>
+    </div>
+  </div>
+
+  <section class="werke-split">
+    <div class="split-head" data-reveal>
+      <span class="section-title-wrap">
+        <h2 class="section-title" data-i18n="werkeH">{T.werkeH}</h2>
+        <span class="bluebar-sm"></span>
+      </span>
+      <a class="link-underline" href="/werke" data-i18n="werkeAll">{T.werkeAll}</a>
+    </div>
+    <div class="split-grid">
+      <a class="work-card" href="/werke#sec-malerei" data-reveal>
+        <img src={SITE.cardMalerei} alt="Malerei" width="700" height="875" loading="lazy" />
+        <div class="work-card-foot">
+          <div class="labels">
+            <span class="label" data-i18n="c1Label">{T.c1Label}</span>
+            <span class="title" data-i18n="c1Title">{T.c1Title}</span>
+          </div>
+          <span class="circle-arrow">→</span>
+        </div>
+      </a>
+      <a class="work-card" href="/werke#sec-keramik" data-reveal>
+        <img src={SITE.cardKeramik} alt="Keramik" width="700" height="678" loading="lazy" />
+        <div class="work-card-foot">
+          <div class="labels">
+            <span class="label" data-i18n="c2Label">{T.c2Label}</span>
+            <span class="title" data-i18n="c2Title">{T.c2Title}</span>
+          </div>
+          <span class="circle-arrow">→</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section class="teaser">
+    <div class="teaser-head" data-reveal>
+      <span class="section-title-wrap">
+        <h2 class="section-title" data-i18n="aH">{T.aH}</h2>
+        <span class="bluebar-sm"></span>
+      </span>
+    </div>
+    <div class="teaser-grid">
+      <img data-reveal src={SITE.teaserPhoto} alt="Doris Boschung-Johner" width="760" height="512" loading="lazy" />
+      <div data-reveal>
+        <div class="teaser-lead" data-i18n="teaserLead">{T.teaserLead}</div>
+        <p class="teaser-body" data-i18n="teaserBody">{T.teaserBody}</p>
+        <a class="pill-btn pill-blue" href="/ueber-mich"><span data-i18n="teaserBtn">{T.teaserBtn}</span> →</a>
+      </div>
+    </div>
+  </section>
+</Base>

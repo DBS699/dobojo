@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import { PARTNERS, T } from '../data/content.js';
+---
+
+<Base
+  title="Partner*innen — DOBOJO"
+  description="Menschen und Projekte, mit denen Doris Boschung-Johner gerne zusammenarbeitet: ViZion, coolinarik und Eastwood Impact AI."
+  active="partner"
+>
+  <div class="partner-page">
+    <h1 class="page-title" data-reveal data-i18n="pH">{T.pH}</h1>
+    <div class="bluebar center-bar" data-reveal style="margin:28px auto 0"></div>
+
+    <div class="partner-inner">
+      <p class="partner-lead" data-reveal data-i18n="pLead">{T.pLead}</p>
+
+      <div class="blue-box" data-reveal>
+        <div class="form-h" data-i18n="pH">{T.pH}</div>
+        <div class="partner-list">
+          {PARTNERS.map((p, i) => (
+            <a class="partner-card" href={p.url} target="_blank" rel="noopener">
+              <span class="top">
+                <span class="name-tag">
+                  <span class="name">{p.name}</span>
+                  <span class="tag" data-i18n={`partners.${i}.tag`}>{T.partners[i].tag}</span>
+                </span>
+                <span class="circle-arrow">↗</span>
+              </span>
+              <span class="desc" data-i18n={`partners.${i}.desc`}>{T.partners[i].desc}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div class="partner-cta" data-reveal>
+        <span class="q" data-i18n="pCta">{T.pCta}</span>
+        <a class="pill-btn pill-white" href="/kontakt"><span data-i18n="aCtaBtn">{T.aCtaBtn}</span> →</a>
+      </div>
+    </div>
+  </div>
+</Base>
