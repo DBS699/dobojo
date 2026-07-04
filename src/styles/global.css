@@ -804,6 +804,9 @@ textarea::placeholder { color: rgba(22, 20, 15, 0.45); opacity: 1; }
   .nav-links { display: none; }
   .burger { display: flex; }
   .hero-side { display: none; }
+  /* credo sits centered directly above the DOBOJO wordmark */
+  .hero-top { grid-template-columns: 1fr; }
+  .credo { text-align: center; display: block; padding: 6px 0 2px; }
   .collage { grid-template-columns: 1fr; }
   .collage .c1, .collage .c3 { margin-top: 0; }
   .split-grid { grid-template-columns: 1fr; }
