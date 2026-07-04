@@ -535,7 +535,7 @@ body.menu-open { overflow: hidden; }
   align-items: start;
 }
 .about-side { position: sticky; top: 110px; }
-.about-side img { width: 100%; display: block; box-shadow: 0 24px 60px rgba(70, 12, 0, 0.35); }
+.about-side img { width: 100%; height: auto; display: block; box-shadow: 0 24px 60px rgba(70, 12, 0, 0.35); }
 .about-side.left img { transform: rotate(-1.2deg); }
 .about-side.right img { transform: rotate(1.4deg); }
 .about-center { max-width: 640px; margin: 0 auto; text-align: center; }
