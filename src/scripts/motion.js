@@ -113,22 +113,26 @@ export function initMotion() {
   if (tk) gsap.to(tk, { xPercent: -50, duration: 30, repeat: -1, ease: 'none' });
 
   // ── Über mich: pinned stage — intro slides out left, CV panel in from right,
-  //    then the vita timeline scrolls horizontally
+  //    then the vita timeline scrolls horizontally. DESKTOP ONLY — on mobile the
+  //    CV renders statically (CSS) as a swipeable card track.
+  const mm = gsap.matchMedia();
   const stage = document.querySelector('[data-about-stage]');
   const intro = document.querySelector('[data-about-intro]');
   const cv = document.querySelector('[data-cv]');
   const cvTrack = document.querySelector('[data-cv-track]');
   if (stage && intro && cv && cvTrack) {
-    const dist = () => Math.max(0, cvTrack.scrollWidth - stage.clientWidth);
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: stage, start: 'top 90px', end: () => '+=' + (dist() + 1300),
-        scrub: 0.5, pin: true, anticipatePin: 1, invalidateOnRefresh: true,
-      },
+    mm.add('(min-width: 761px)', () => {
+      const dist = () => Math.max(0, cvTrack.scrollWidth - stage.clientWidth);
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: stage, start: 'top 90px', end: () => '+=' + (dist() + 1300),
+          scrub: 0.5, pin: true, anticipatePin: 1, invalidateOnRefresh: true,
+        },
+      });
+      tl.to(intro, { x: '-55vw', autoAlpha: 0, ease: 'power1.inOut', duration: 0.6 }, 0);
+      tl.fromTo(cv, { x: '80vw', autoAlpha: 0 }, { x: 0, autoAlpha: 1, ease: 'power1.inOut', duration: 0.6 }, 0.12);
+      tl.to(cvTrack, { x: () => -dist(), ease: 'none', duration: 1.6 }, 0.85);
     });
-    tl.to(intro, { x: '-55vw', autoAlpha: 0, ease: 'power1.inOut', duration: 0.6 }, 0);
-    tl.fromTo(cv, { x: '80vw', autoAlpha: 0 }, { x: 0, autoAlpha: 1, ease: 'power1.inOut', duration: 0.6 }, 0.12);
-    tl.to(cvTrack, { x: () => -dist(), ease: 'none', duration: 1.6 }, 0.85);
   }
 
   // ── Werke: tree birds peek out, then cat scares them off on first scroll
@@ -173,22 +177,26 @@ export function initMotion() {
     gsap.to(orb, { rotation: 360, duration: 36, repeat: -1, ease: 'none', transformOrigin: '50% 50%' });
     gsap.to(items, { rotation: -360, duration: 36, repeat: -1, ease: 'none', transformOrigin: '50% 50%' });
   }
+  // Pinned hero blur-out — DESKTOP ONLY; on mobile the hero flows normally and
+  // the galleries follow directly (no 50vh gap, no pin).
   const hero = document.querySelector('[data-werke-hero]');
   const wrap = document.querySelector('[data-orbit-wrap]');
   if (hero && wrap) {
-    const fades = hero.querySelectorAll('[data-hero-fade]');
-    const sm = document.getElementById('sec-malerei');
-    if (sm) gsap.set(sm, { marginTop: '50vh' });
-    gsap.timeline({
-      scrollTrigger: {
-        trigger: hero, start: 'top top',
-        end: () => '+=' + Math.round(hero.offsetHeight + window.innerHeight * 0.38),
-        scrub: 0.5, pin: true, pinSpacing: false, anticipatePin: 1, invalidateOnRefresh: true,
-      },
-    })
-      .to(fades, { opacity: 0, y: -36, duration: 0.35, ease: 'power1.in', stagger: 0.03 }, 0)
-      .to(wrap, { scale: 3.1, duration: 1, ease: 'power1.in' }, 0)
-      .to(wrap, { opacity: 0, duration: 0.3, ease: 'power1.out' }, 0.7);
+    mm.add('(min-width: 761px)', () => {
+      const fades = hero.querySelectorAll('[data-hero-fade]');
+      const sm = document.getElementById('sec-malerei');
+      if (sm) gsap.set(sm, { marginTop: '50vh' });
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: hero, start: 'top top',
+          end: () => '+=' + Math.round(hero.offsetHeight + window.innerHeight * 0.38),
+          scrub: 0.5, pin: true, pinSpacing: false, anticipatePin: 1, invalidateOnRefresh: true,
+        },
+      })
+        .to(fades, { opacity: 0, y: -36, duration: 0.35, ease: 'power1.in', stagger: 0.03 }, 0)
+        .to(wrap, { scale: 3.1, duration: 1, ease: 'power1.in' }, 0)
+        .to(wrap, { opacity: 0, duration: 0.3, ease: 'power1.out' }, 0.7);
+    });
   }
 
   // subtle parallax on gallery artworks

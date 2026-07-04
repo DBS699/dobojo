@@ -816,6 +816,40 @@ textarea::placeholder { color: rgba(22, 20, 15, 0.45); opacity: 1; }
   .kontakt-rows { grid-template-columns: 1fr; }
   .tree-scene, .cat { display: none; }
   .orbit-scale { transform: scale(0.62); }
-  .cv-item { width: 84vw; }
   .work-card-foot .title { font-size: 26px; }
+
+  /* Mobile runs WITHOUT the pinned scroll scenes (motion.js gates them to
+     ≥761px) — everything below turns them into plain, touch-native layouts. */
+
+  /* Werke: hero flows normally, galleries follow directly */
+  .werke-hero { min-height: auto; padding-bottom: 44px; }
+  /* the 0.62 scale leaves dead space in the 440px orbit box — pull it in */
+  .orbit-wrap { margin: -30px 0 -60px; }
+  .werke-intro { margin-top: 28px; }
+  .jump-chips { flex-direction: column; align-items: stretch; gap: 0; }
+  .jump-chip { justify-content: center; }
+  .jump-chip:first-child { border-radius: 12px 12px 0 0; }
+  .jump-chip:last-child { border-radius: 0 0 12px 12px; border-left: 1.5px solid var(--cream); border-top: none; }
+
+  /* Über mich: intro is a normal section, the Lebenslauf follows as a
+     horizontally swipeable card track (native scroll + snap) */
+  .about-stage, .about-intro { min-height: auto; }
+  .cv-panel {
+    position: static;
+    visibility: visible;
+    opacity: 1;
+    margin-top: 70px;
+  }
+  .cv-track {
+    width: auto;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 10px;
+  }
+  .cv-track::-webkit-scrollbar { display: none; }
+  .cv-item { width: 84vw; scroll-snap-align: start; padding: 36px 28px 20px; }
+  .cv-item .x { max-width: none; }
+  .ex-grid { margin-top: 56px; }
 }
