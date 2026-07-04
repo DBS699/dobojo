@@ -806,7 +806,11 @@ textarea::placeholder { color: rgba(22, 20, 15, 0.45); opacity: 1; }
   .hero-side { display: none; }
   /* credo sits centered directly above the DOBOJO wordmark */
   .hero-top { grid-template-columns: 1fr; }
-  .credo { text-align: center; display: block; padding: 6px 0 2px; }
+  .credo { text-align: center; display: block; padding: 6px 0 0; margin-bottom: 32px; }
+  /* shrink flower + bird so they flank the small wordmark instead of
+     overlapping the credo (sized via width/height — GSAP owns transform) */
+  .hero-flower { width: 42px; height: 70px; left: -50px; }
+  .hero-bird { width: 40px; height: 34px; right: -48px; }
   .collage { grid-template-columns: 1fr; }
   .collage .c1, .collage .c3 { margin-top: 0; }
   .split-grid { grid-template-columns: 1fr; }
