@@ -446,6 +446,9 @@ body.menu-open { overflow: hidden; }
 .orbit { position: absolute; inset: 0; }
 .orbit-item { position: absolute; }
 .orbit-item img {
+  /* fixed circle — the global img max-width would squeeze items near the
+     container edge into ovals (shrink-to-fit on the absolute wrapper) */
+  max-width: none;
   width: 100px;
   height: 100px;
   object-fit: cover;
@@ -824,6 +827,8 @@ textarea::placeholder { color: rgba(22, 20, 15, 0.45); opacity: 1; }
   .tree-scene, .cat { display: none; }
   .orbit-scale { transform: scale(0.62); }
   .work-card-foot .title { font-size: 26px; }
+  .gallery-head { flex-wrap: wrap; row-gap: 4px; }
+  .blue-box { padding: 28px 22px; border-radius: 22px; }
 
   /* Mobile runs WITHOUT the pinned scroll scenes (motion.js gates them to
      ≥761px) — everything below turns them into plain, touch-native layouts. */
