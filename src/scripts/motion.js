@@ -62,20 +62,16 @@ export function initMotion() {
     el.addEventListener('mouseleave', () => gsap.to(el, { scale: 1, duration: 0.55, ease: 'power2.out' }));
   });
 
-  // ── Start: flower grows, bird flies in, credo fades in; both leave on scroll
-  //    and COME BACK when scrolling up again (reversible exit timeline)
+  // ── Start: flower grows, bird flies in, credo fades in; both leave for good
+  //    on first scroll (one-shot, per design — the Werke scene is the reversible one)
   const flower = document.querySelector('[data-flower]');
   const bird = document.querySelector('[data-bird]');
   if (flower || bird) {
     const wing = bird ? bird.querySelector('[data-wing]') : null;
-    const idle = [];
-    const startIdle = (flowerDelay, birdDelay) => {
-      if (flower) idle.push(gsap.to(flower, { rotation: 3.5, transformOrigin: '50% 100%', duration: 2.6, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: flowerDelay }));
-      if (bird) idle.push(gsap.to(bird, { y: -2, duration: 2.4, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: birdDelay }));
-    };
-    const stopIdle = () => idle.splice(0).forEach((t) => t.kill());
-
-    if (flower) gsap.fromTo(flower, { scale: 0, transformOrigin: '50% 100%' }, { scale: 1, duration: 1.6, ease: 'elastic.out(1,0.45)', delay: 1.2 });
+    if (flower) {
+      gsap.fromTo(flower, { scale: 0, transformOrigin: '50% 100%' }, { scale: 1, duration: 1.6, ease: 'elastic.out(1,0.45)', delay: 1.2 });
+      gsap.to(flower, { rotation: 3.5, transformOrigin: '50% 100%', duration: 2.6, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: 3 });
+    }
     if (bird) {
       const btl = gsap.timeline({ delay: 0.5 });
       btl.fromTo(
@@ -83,34 +79,36 @@ export function initMotion() {
         { x: -Math.min(520, window.innerWidth * 0.4), y: -240, rotation: -14, opacity: 1 },
         { x: -46, y: -26, rotation: -5, duration: 0.85, ease: 'power1.in' },
         0
-      ).to(bird, { x: 0, y: 0, rotation: 0, duration: 0.5, ease: 'power3.out' }, 0.85);
+      )
+        .to(bird, { x: 0, y: 0, rotation: 0, duration: 0.5, ease: 'power3.out' }, 0.85)
+        .to(bird, { y: -2, duration: 2.4, ease: 'sine.inOut', yoyo: true, repeat: -1 }, 1.4);
       if (wing) {
         btl.fromTo(wing, { rotation: -30 }, { rotation: 25, duration: 0.11, yoyo: true, repeat: 11, transformOrigin: '30% 40%', ease: 'sine.inOut' }, 0)
           .set(wing, { rotation: 0 }, 1.4);
       }
     }
-    startIdle(3, 1.9);
     const credo = document.querySelector('[data-credo]');
     if (credo) gsap.fromTo(credo, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power2.out', delay: 2.1 });
 
-    const exitTargets = [bird, wing, flower].filter(Boolean);
-    const exit = gsap.timeline({
-      scrollTrigger: { trigger: document.body, start: '6px top', toggleActions: 'play none none reverse' },
-      onStart() {
-        gsap.killTweensOf(exitTargets);
-        stopIdle();
-        // settle to resting pose so play captures (and reverse restores) it
-        if (bird) gsap.set(bird, { x: 0, y: 0, rotation: 0, opacity: 1 });
-        if (flower) gsap.set(flower, { scale: 1, rotation: 0 });
-      },
-      onReverseComplete() { startIdle(0.5, 0.5); },
-    });
-    if (bird) {
-      exit.to(bird, { x: Math.min(560, window.innerWidth * 0.45), y: -300, rotation: 10, duration: 0.7, ease: 'power2.in' }, 0)
-        .to(bird, { opacity: 0, duration: 0.22 }, 0.48);
-      if (wing) exit.fromTo(wing, { rotation: -30 }, { rotation: 25, duration: 0.09, yoyo: true, repeat: 8, transformOrigin: '30% 40%', ease: 'sine.inOut', immediateRender: false }, 0);
-    }
-    if (flower) exit.to(flower, { scale: 0, rotation: 0, transformOrigin: '50% 100%', duration: 0.4, ease: 'back.in(1.4)' }, 0);
+    const flyAway = () => {
+      if (bird) {
+        gsap.killTweensOf(bird);
+        const away = gsap.timeline();
+        away.to(bird, { x: Math.min(560, window.innerWidth * 0.45), y: -300, rotation: 10, duration: 0.7, ease: 'power2.in' }, 0)
+          .to(bird, { opacity: 0, duration: 0.22 }, 0.48);
+        if (wing) away.fromTo(wing, { rotation: -30 }, { rotation: 25, duration: 0.09, yoyo: true, repeat: 8, transformOrigin: '30% 40%', ease: 'sine.inOut' }, 0);
+      }
+      if (flower) {
+        gsap.killTweensOf(flower);
+        gsap.to(flower, { scale: 0, rotation: 0, transformOrigin: '50% 100%', duration: 0.4, ease: 'back.in(1.4)' });
+      }
+    };
+    const onScroll = () => {
+      if (window.scrollY < 6) return;
+      window.removeEventListener('scroll', onScroll);
+      flyAway();
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
   }
 
   // ── ticker
