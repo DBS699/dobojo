@@ -62,15 +62,20 @@ export function initMotion() {
     el.addEventListener('mouseleave', () => gsap.to(el, { scale: 1, duration: 0.55, ease: 'power2.out' }));
   });
 
-  // ── Start: flower grows, bird flies in, credo fades in; both leave on first scroll
+  // ── Start: flower grows, bird flies in, credo fades in; both leave on scroll
+  //    and COME BACK when scrolling up again (reversible exit timeline)
   const flower = document.querySelector('[data-flower]');
   const bird = document.querySelector('[data-bird]');
   if (flower || bird) {
     const wing = bird ? bird.querySelector('[data-wing]') : null;
-    if (flower) {
-      gsap.fromTo(flower, { scale: 0, transformOrigin: '50% 100%' }, { scale: 1, duration: 1.6, ease: 'elastic.out(1,0.45)', delay: 1.2 });
-      gsap.to(flower, { rotation: 3.5, transformOrigin: '50% 100%', duration: 2.6, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: 3 });
-    }
+    const idle = [];
+    const startIdle = (flowerDelay, birdDelay) => {
+      if (flower) idle.push(gsap.to(flower, { rotation: 3.5, transformOrigin: '50% 100%', duration: 2.6, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: flowerDelay }));
+      if (bird) idle.push(gsap.to(bird, { y: -2, duration: 2.4, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: birdDelay }));
+    };
+    const stopIdle = () => idle.splice(0).forEach((t) => t.kill());
+
+    if (flower) gsap.fromTo(flower, { scale: 0, transformOrigin: '50% 100%' }, { scale: 1, duration: 1.6, ease: 'elastic.out(1,0.45)', delay: 1.2 });
     if (bird) {
       const btl = gsap.timeline({ delay: 0.5 });
       btl.fromTo(
@@ -78,36 +83,34 @@ export function initMotion() {
         { x: -Math.min(520, window.innerWidth * 0.4), y: -240, rotation: -14, opacity: 1 },
         { x: -46, y: -26, rotation: -5, duration: 0.85, ease: 'power1.in' },
         0
-      )
-        .to(bird, { x: 0, y: 0, rotation: 0, duration: 0.5, ease: 'power3.out' }, 0.85)
-        .to(bird, { y: -2, duration: 2.4, ease: 'sine.inOut', yoyo: true, repeat: -1 }, 1.4);
+      ).to(bird, { x: 0, y: 0, rotation: 0, duration: 0.5, ease: 'power3.out' }, 0.85);
       if (wing) {
         btl.fromTo(wing, { rotation: -30 }, { rotation: 25, duration: 0.11, yoyo: true, repeat: 11, transformOrigin: '30% 40%', ease: 'sine.inOut' }, 0)
           .set(wing, { rotation: 0 }, 1.4);
       }
     }
+    startIdle(3, 1.9);
     const credo = document.querySelector('[data-credo]');
     if (credo) gsap.fromTo(credo, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power2.out', delay: 2.1 });
 
-    const flyAway = () => {
-      if (bird) {
-        gsap.killTweensOf(bird);
-        const away = gsap.timeline();
-        away.to(bird, { x: Math.min(560, window.innerWidth * 0.45), y: -300, rotation: 10, duration: 0.7, ease: 'power2.in' }, 0)
-          .to(bird, { opacity: 0, duration: 0.22 }, 0.48);
-        if (wing) away.fromTo(wing, { rotation: -30 }, { rotation: 25, duration: 0.09, yoyo: true, repeat: 8, transformOrigin: '30% 40%', ease: 'sine.inOut' }, 0);
-      }
-      if (flower) {
-        gsap.killTweensOf(flower);
-        gsap.to(flower, { scale: 0, rotation: 0, transformOrigin: '50% 100%', duration: 0.4, ease: 'back.in(1.4)' });
-      }
-    };
-    const onScroll = () => {
-      if (window.scrollY < 6) return;
-      window.removeEventListener('scroll', onScroll);
-      flyAway();
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
+    const exitTargets = [bird, wing, flower].filter(Boolean);
+    const exit = gsap.timeline({
+      scrollTrigger: { trigger: document.body, start: '6px top', toggleActions: 'play none none reverse' },
+      onStart() {
+        gsap.killTweensOf(exitTargets);
+        stopIdle();
+        // settle to resting pose so play captures (and reverse restores) it
+        if (bird) gsap.set(bird, { x: 0, y: 0, rotation: 0, opacity: 1 });
+        if (flower) gsap.set(flower, { scale: 1, rotation: 0 });
+      },
+      onReverseComplete() { startIdle(0.5, 0.5); },
+    });
+    if (bird) {
+      exit.to(bird, { x: Math.min(560, window.innerWidth * 0.45), y: -300, rotation: 10, duration: 0.7, ease: 'power2.in' }, 0)
+        .to(bird, { opacity: 0, duration: 0.22 }, 0.48);
+      if (wing) exit.fromTo(wing, { rotation: -30 }, { rotation: 25, duration: 0.09, yoyo: true, repeat: 8, transformOrigin: '30% 40%', ease: 'sine.inOut', immediateRender: false }, 0);
+    }
+    if (flower) exit.to(flower, { scale: 0, rotation: 0, transformOrigin: '50% 100%', duration: 0.4, ease: 'back.in(1.4)' }, 0);
   }
 
   // ── ticker
@@ -137,38 +140,43 @@ export function initMotion() {
     });
   }
 
-  // ── Werke: tree birds peek out, then cat scares them off on first scroll
+  // ── Werke: tree birds peek out; the cat scares them off on scroll — and the
+  //    whole scene REVERSES when scrolling back up (birds return, cat leaves)
   const scene = document.querySelector('[data-tree-scene]');
   if (scene) {
     const tbirds = scene.querySelectorAll('[data-tree-bird]');
     const cat = document.querySelector('[data-cat]');
     const treeSvg = scene.querySelector('[data-tree]');
-    const birdIdle = [];
+    const bob = [];
+    const startBob = (delay) => {
+      tbirds.forEach((b, i) => bob.push(gsap.to(b, { y: -4, duration: 1.6 + (i % 3) * 0.4, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: delay + i * 0.3 })));
+    };
+    const stopBob = () => bob.splice(0).forEach((t) => t.kill());
     tbirds.forEach((b, i) => {
-      birdIdle.push(
-        gsap.fromTo(b, { opacity: 0, scale: 0, y: 10 }, { opacity: 1, scale: 1, y: 0, duration: 0.6, ease: 'back.out(2)', delay: 0.8 + i * 0.22, transformOrigin: '50% 100%' }),
-        gsap.to(b, { y: -4, duration: 1.6 + (i % 3) * 0.4, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: 1.6 + i * 0.3 })
-      );
+      gsap.fromTo(b, { opacity: 0, scale: 0, y: 10 }, { opacity: 1, scale: 1, y: 0, duration: 0.6, ease: 'back.out(2)', delay: 0.8 + i * 0.22, transformOrigin: '50% 100%' });
     });
+    startBob(1.6);
     if (cat) gsap.set(cat, { x: 300, opacity: 0 });
-    ScrollTrigger.create({
-      trigger: '[data-werke-hero]', start: '20px top', once: true,
-      onEnter: () => {
-        const tl = gsap.timeline();
-        if (cat) {
-          tl.to(cat, { x: 0, opacity: 1, duration: 1.2, ease: 'power2.out' }, 0);
-          tl.to(cat, { y: -3, duration: 0.16, yoyo: true, repeat: 7, ease: 'sine.inOut' }, 0);
-        }
-        if (treeSvg) tl.fromTo(treeSvg, { rotation: 0 }, { rotation: 1.4, transformOrigin: '50% 100%', duration: 0.09, yoyo: true, repeat: 7 }, 0.55);
-        birdIdle.forEach((t) => t.kill());
-        gsap.set(tbirds, { opacity: 1, scale: 1 });
-        tbirds.forEach((b, i) => {
-          const dir = i % 2 ? 1 : -1;
-          tl.to(b, { x: -(140 + i * 60) + dir * 20, y: -(150 + i * 55), rotation: dir * -8, duration: 1.5, ease: 'power1.out' }, 0.62 + i * 0.1);
-          tl.to(b.querySelectorAll('path'), { scaleY: 0.35, transformOrigin: '50% 100%', duration: 0.09, yoyo: true, repeat: 14, ease: 'sine.inOut' }, 0.62 + i * 0.1);
-          tl.to(b, { opacity: 0, duration: 0.45 }, 1.7 + i * 0.1);
-        });
+
+    const scare = gsap.timeline({
+      scrollTrigger: { trigger: '[data-werke-hero]', start: '20px top', toggleActions: 'play none none reverse' },
+      onStart() {
+        gsap.killTweensOf(tbirds);
+        stopBob();
+        gsap.set(tbirds, { opacity: 1, scale: 1, x: 0, y: 0, rotation: 0 });
       },
+      onReverseComplete() { startBob(0.3); },
+    });
+    if (cat) {
+      scare.to(cat, { x: 0, opacity: 1, duration: 1.2, ease: 'power2.out' }, 0);
+      scare.to(cat, { y: -3, duration: 0.16, yoyo: true, repeat: 7, ease: 'sine.inOut' }, 0);
+    }
+    if (treeSvg) scare.fromTo(treeSvg, { rotation: 0 }, { rotation: 1.4, transformOrigin: '50% 100%', duration: 0.09, yoyo: true, repeat: 7, immediateRender: false }, 0.55);
+    tbirds.forEach((b, i) => {
+      const dir = i % 2 ? 1 : -1;
+      scare.to(b, { x: -(140 + i * 60) + dir * 20, y: -(150 + i * 55), rotation: dir * -8, duration: 1.5, ease: 'power1.out' }, 0.62 + i * 0.1);
+      scare.to(b.querySelectorAll('path'), { scaleY: 0.35, transformOrigin: '50% 100%', duration: 0.09, yoyo: true, repeat: 14, ease: 'sine.inOut' }, 0.62 + i * 0.1);
+      scare.to(b, { opacity: 0, duration: 0.45 }, 1.7 + i * 0.1);
     });
   }
 
