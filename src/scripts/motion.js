@@ -150,8 +150,9 @@ export function initMotion() {
       tbirds.forEach((b, i) => bob.push(gsap.to(b, { y: -4, duration: 1.6 + (i % 3) * 0.4, yoyo: true, repeat: -1, ease: 'sine.inOut', delay: delay + i * 0.3 })));
     };
     const stopBob = () => bob.splice(0).forEach((t) => t.kill());
+    const entrance = [];
     tbirds.forEach((b, i) => {
-      gsap.fromTo(b, { opacity: 0, scale: 0, y: 10 }, { opacity: 1, scale: 1, y: 0, duration: 0.6, ease: 'back.out(2)', delay: 0.8 + i * 0.22, transformOrigin: '50% 100%' });
+      entrance.push(gsap.fromTo(b, { opacity: 0, scale: 0, y: 10 }, { opacity: 1, scale: 1, y: 0, duration: 0.6, ease: 'back.out(2)', delay: 0.8 + i * 0.22, transformOrigin: '50% 100%' }));
     });
     startBob(1.6);
     if (cat) gsap.set(cat, { x: 300, opacity: 0 });
@@ -159,7 +160,9 @@ export function initMotion() {
     const scare = gsap.timeline({
       scrollTrigger: { trigger: '[data-werke-hero]', start: '20px top', toggleActions: 'play none none reverse' },
       onStart() {
-        gsap.killTweensOf(tbirds);
+        // kill ONLY entrance + bob — killTweensOf(tbirds) would also kill this
+        // timeline's own bird tweens and the birds would never fly away
+        entrance.splice(0).forEach((t) => t.kill());
         stopBob();
         gsap.set(tbirds, { opacity: 1, scale: 1, x: 0, y: 0, rotation: 0 });
       },
