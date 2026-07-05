@@ -517,10 +517,16 @@ body.menu-open { overflow: hidden; }
 }
 .art-open:focus-visible { outline: 2.5px solid var(--cream); outline-offset: 4px; }
 .art-tile {
+  /* fixed passepartout frame: every tile is the same 4:5 cream box and the
+     artwork is always shown COMPLETE (contain) — any CMS upload just works */
   width: 100%;
   aspect-ratio: 4 / 5;
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
   background-position: center;
+  background-color: var(--cream);
+  border: 14px solid var(--cream);
+  background-origin: padding-box;
   box-shadow: 0 18px 44px rgba(70, 12, 0, 0.35);
 }
 
