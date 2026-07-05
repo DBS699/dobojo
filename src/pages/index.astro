@@ -108,12 +108,13 @@ import { SITE, T } from '../data/content.js';
       </span>
     </div>
     <div class="teaser-grid">
-      <img data-reveal src={SITE.teaserPhoto} alt="Doris Boschung-Johner" width="760" height="512" loading="lazy" />
+      <img class="t-left" data-reveal src={SITE.teaserPhoto} alt="Doris Boschung-Johner" width="760" height="512" loading="lazy" />
       <div data-reveal>
         <div class="teaser-lead" data-i18n="teaserLead">{T.teaserLead}</div>
         <p class="teaser-body" data-i18n="teaserBody">{T.teaserBody}</p>
         <a class="pill-btn pill-blue" href="/ueber-mich"><span data-i18n="teaserBtn">{T.teaserBtn}</span> →</a>
       </div>
+      <img class="t-right" data-reveal src={SITE.teaserPhoto2} alt="Werk von Doris Boschung-Johner" width="700" height="966" loading="lazy" />
     </div>
   </section>
 </Base>

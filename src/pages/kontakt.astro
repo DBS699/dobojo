@@ -37,22 +37,24 @@ import { SITE, T } from '../data/content.js';
         </div>
       </form>
 
-      <img class="kontakt-photo" data-reveal src={SITE.kontaktPhoto} alt="Atelier in Kerzers" width="1200" height="797" loading="lazy" />
-
-      <div class="kontakt-rows" data-reveal>
-        <div class="kontakt-row">
-          <span class="k" data-i18n="kAtelier">{T.kAtelier}</span>
-          <span class="v">{SITE.addressLine1}<br />{SITE.addressLine2}</span>
-        </div>
-        <div class="kontakt-row">
-          <span class="k" data-i18n="kMail">{T.kMail}</span>
-          <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
-        </div>
-        <div class="kontakt-row">
-          <span class="k" data-i18n="kInsta">{T.kInsta}</span>
-          <a href={`https://www.instagram.com/${SITE.instagram}`} target="_blank" rel="noopener">@{SITE.instagram}</a>
+      <div class="blue-box kontakt-rows-box" data-reveal>
+        <div class="kontakt-rows">
+          <div class="kontakt-row">
+            <span class="k" data-i18n="kAtelier">{T.kAtelier}</span>
+            <span class="v">{SITE.addressLine1}<br />{SITE.addressLine2}</span>
+          </div>
+          <div class="kontakt-row">
+            <span class="k" data-i18n="kMail">{T.kMail}</span>
+            <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+          </div>
+          <div class="kontakt-row">
+            <span class="k" data-i18n="kInsta">{T.kInsta}</span>
+            <a href={`https://www.instagram.com/${SITE.instagram}`} target="_blank" rel="noopener">@{SITE.instagram}</a>
+          </div>
         </div>
       </div>
+
+      <img class="kontakt-photo" data-reveal src={SITE.kontaktPhoto} alt="Atelier in Kerzers" width="1200" height="797" loading="lazy" />
     </div>
   </div>
 

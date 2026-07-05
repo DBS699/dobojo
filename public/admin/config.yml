@@ -61,7 +61,8 @@ collections:
           - { name: collage3, label: "Startseite — Collage rechts", widget: image }
           - { name: cardMalerei, label: "Startseite — Karte «Malerei»", widget: image }
           - { name: cardKeramik, label: "Startseite — Karte «Keramik»", widget: image }
-          - { name: teaserPhoto, label: "Startseite — Foto «Über mich»", widget: image }
+          - { name: teaserPhoto, label: "Startseite — Foto «Über mich» links", widget: image }
+          - { name: teaserPhoto2, label: "Startseite — Bild «Über mich» rechts", widget: image }
           - { name: aboutPortrait, label: "Über mich — Foto links", widget: image }
           - { name: aboutAtelier, label: "Über mich — Foto rechts (Atelier)", widget: image }
           - { name: kontaktPhoto, label: "Kontakt — Atelier-Foto", widget: image }

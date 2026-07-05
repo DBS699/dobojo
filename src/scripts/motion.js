@@ -17,7 +17,9 @@ function scrollToId(id) {
   const el = document.getElementById(id);
   if (!el) return;
   ScrollTrigger.refresh();
-  const calc = () => el.getBoundingClientRect().top + window.scrollY - 70;
+  // land a touch deeper than the sticky nav so no trace of the pinned hero
+  // animation stays visible above the section
+  const calc = () => el.getBoundingClientRect().top + window.scrollY - 30;
   if (motionOK()) {
     const o = { v: window.scrollY };
     gsap.to(o, {
