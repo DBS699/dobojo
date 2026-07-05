@@ -506,6 +506,7 @@ body.menu-open { overflow: hidden; }
   font-weight: 600;
 }
 .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px 28px; }
+[data-zoom] { cursor: zoom-in; }
 .art-open {
   display: block;
   width: 100%;

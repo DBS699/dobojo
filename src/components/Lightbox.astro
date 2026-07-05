@@ -1,0 +1,70 @@
+---
+// Fullscreen artwork lightbox — include once per page; picks up every element
+// with [data-zoom] (value = full image URL) in DOM order. Caption comes from
+// data-caption, or a sibling .art-caption row (language-aware), else stays empty.
+---
+
+<dialog class="lightbox" data-lightbox>
+  <button class="lb-close" type="button" aria-label="Schliessen">×</button>
+  <button class="lb-prev" type="button" aria-label="Vorheriges Bild">←</button>
+  <figure class="lb-figure">
+    <img class="lb-img" alt="" />
+    <figcaption class="lb-cap"></figcaption>
+  </figure>
+  <button class="lb-next" type="button" aria-label="Nächstes Bild">→</button>
+  <span class="lb-counter"></span>
+</dialog>
+
+<script>
+  const lb = document.querySelector('[data-lightbox]') as HTMLDialogElement | null;
+  if (lb) {
+    const img = lb.querySelector('.lb-img') as HTMLImageElement;
+    const cap = lb.querySelector('.lb-cap') as HTMLElement;
+    const counter = lb.querySelector('.lb-counter') as HTMLElement;
+    const openers = [...document.querySelectorAll<HTMLElement>('[data-zoom]')];
+
+    const captionFor = (el: HTMLElement) => {
+      if (el.dataset.caption) return el.dataset.caption;
+      const capRow = el.parentElement?.querySelector('.art-caption');
+      if (capRow) {
+        const t = capRow.querySelector('.t')?.textContent?.trim() || '';
+        const m = capRow.querySelector('.m')?.textContent?.trim() || '';
+        return m ? `${t} — ${m}` : t;
+      }
+      return '';
+    };
+
+    let idx = 0;
+    const show = (i: number) => {
+      idx = (i + openers.length) % openers.length;
+      const el = openers[idx];
+      img.src = el.dataset.zoom || '';
+      const c = captionFor(el);
+      cap.textContent = c;
+      cap.hidden = !c;
+      img.alt = c || (el instanceof HTMLImageElement ? el.alt : '');
+      counter.textContent = `${idx + 1} / ${openers.length}`;
+    };
+
+    openers.forEach((el, i) => {
+      const open = () => { show(i); lb.showModal(); };
+      el.addEventListener('click', open);
+      // plain <img> openers need button semantics for keyboard users
+      if (!(el instanceof HTMLButtonElement)) {
+        el.setAttribute('role', 'button');
+        el.setAttribute('tabindex', '0');
+        el.addEventListener('keydown', (e) => {
+          if ((e as KeyboardEvent).key === 'Enter' || (e as KeyboardEvent).key === ' ') { e.preventDefault(); open(); }
+        });
+      }
+    });
+    lb.querySelector('.lb-close')?.addEventListener('click', () => lb.close());
+    lb.querySelector('.lb-prev')?.addEventListener('click', () => show(idx - 1));
+    lb.querySelector('.lb-next')?.addEventListener('click', () => show(idx + 1));
+    lb.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') show(idx - 1);
+      if (e.key === 'ArrowRight') show(idx + 1);
+    });
+    lb.addEventListener('click', (e) => { if (e.target === lb) lb.close(); });
+  }
+</script>

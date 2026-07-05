@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Lightbox from '../components/Lightbox.astro';
 import { SITE, T } from '../data/content.js';
 ---
 
@@ -48,16 +49,16 @@ import { SITE, T } from '../data/content.js';
     <div class="bluebar center-bar" data-reveal></div>
 
     <div class="collage">
-      <img class="c1" data-reveal src={SITE.collage1} alt="Malerei von Doris Boschung-Johner" width="600" height="830" loading="eager" />
+      <img class="c1" data-reveal data-zoom={SITE.collage1} src={SITE.collage1} alt="Malerei von Doris Boschung-Johner" width="600" height="830" loading="eager" />
       <div>
-        <img data-reveal src={SITE.collage2} alt="Malerei von Doris Boschung-Johner" width="1100" height="692" loading="eager" />
+        <img data-reveal data-zoom={SITE.collage2} src={SITE.collage2} alt="Malerei von Doris Boschung-Johner" width="1100" height="692" loading="eager" />
         <div class="collage-mid-text" data-reveal>
           <div class="kicker" data-i18n="kicker">{T.kicker}</div>
           <div class="lead"><span data-i18n="heroT1">{T.heroT1}</span><br />Doris Boschung-Johner</div>
           <a class="pill-btn pill-cream" href="/werke" data-i18n="werkeAll">{T.werkeAll}</a>
         </div>
       </div>
-      <img class="c3" data-reveal src={SITE.collage3} alt="Malerei von Doris Boschung-Johner" width="600" height="786" loading="eager" />
+      <img class="c3" data-reveal data-zoom={SITE.collage3} src={SITE.collage3} alt="Malerei von Doris Boschung-Johner" width="600" height="786" loading="eager" />
     </div>
   </section>
 
@@ -108,13 +109,15 @@ import { SITE, T } from '../data/content.js';
       </span>
     </div>
     <div class="teaser-grid">
-      <img class="t-left" data-reveal src={SITE.teaserPhoto} alt="Doris Boschung-Johner" width="760" height="512" loading="lazy" />
+      <img class="t-left" data-reveal data-zoom={SITE.teaserPhoto} src={SITE.teaserPhoto} alt="Doris Boschung-Johner" width="760" height="512" loading="lazy" />
       <div data-reveal>
         <div class="teaser-lead" data-i18n="teaserLead">{T.teaserLead}</div>
         <p class="teaser-body" data-i18n="teaserBody">{T.teaserBody}</p>
         <a class="pill-btn pill-blue" href="/ueber-mich"><span data-i18n="teaserBtn">{T.teaserBtn}</span> →</a>
       </div>
-      <img class="t-right" data-reveal src={SITE.teaserPhoto2} alt="Werk von Doris Boschung-Johner" width="700" height="966" loading="lazy" />
+      <img class="t-right" data-reveal data-zoom={SITE.teaserPhoto2} src={SITE.teaserPhoto2} alt="Werk von Doris Boschung-Johner" width="700" height="966" loading="lazy" />
     </div>
   </section>
+
+  <Lightbox />
 </Base>
