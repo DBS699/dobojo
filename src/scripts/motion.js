@@ -210,13 +210,8 @@ export function initMotion() {
     });
   }
 
-  // subtle parallax on gallery artworks
-  document.querySelectorAll('.gallery-grid [data-art]').forEach((el, i) => {
-    gsap.to(el, {
-      yPercent: -(4 + (i % 3) * 4), ease: 'none',
-      scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true },
-    });
-  });
+  // (no parallax on the gallery tiles — rows must stay perfectly aligned;
+  //  the per-column yPercent drift made equal tiles look unequally placed)
 }
 
 export function setupNavigation() {
