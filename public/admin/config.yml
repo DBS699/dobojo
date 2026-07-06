@@ -47,6 +47,12 @@ collections:
               - { name: image, label: "Bild", widget: image }
               - { name: title, label: "Titel (leer = «Ohne Titel»)", widget: string, required: false, default: "" }
               - { name: medium, label: "Technik (leer = «Ton / Steinzeug»)", widget: string, required: false, default: "" }
+              - name: model
+                label: "3D-Modell (GLB-Datei, optional)"
+                widget: file
+                required: false
+                default: ""
+                hint: "3D-Scan der Skulptur als .glb — das Werk bekommt ein «3D»-Zeichen und lässt sich beim Anklicken drehen und von allen Seiten ansehen."
 
   - name: seitenbilder
     label: "Seiten-Bilder & Kontakt"

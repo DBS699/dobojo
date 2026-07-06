@@ -1,18 +1,71 @@
 {
   "malerei": [
-    { "image": "/assets/works/malerei-1.jpg", "title": "", "medium": "" },
-    { "image": "/assets/works/malerei-2.jpg", "title": "", "medium": "" },
-    { "image": "/assets/works/malerei-3.jpg", "title": "", "medium": "" },
-    { "image": "/assets/works/malerei-4.jpg", "title": "", "medium": "" },
-    { "image": "/assets/works/malerei-5.jpg", "title": "", "medium": "" },
-    { "image": "/assets/works/malerei-6.jpg", "title": "", "medium": "" },
-    { "image": "/assets/works/malerei-7.jpg", "title": "", "medium": "" }
+    {
+      "image": "/assets/works/malerei-1.jpg",
+      "title": "",
+      "medium": ""
+    },
+    {
+      "image": "/assets/works/malerei-2.jpg",
+      "title": "",
+      "medium": ""
+    },
+    {
+      "image": "/assets/works/malerei-3.jpg",
+      "title": "",
+      "medium": ""
+    },
+    {
+      "image": "/assets/works/malerei-4.jpg",
+      "title": "",
+      "medium": ""
+    },
+    {
+      "image": "/assets/works/malerei-5.jpg",
+      "title": "",
+      "medium": ""
+    },
+    {
+      "image": "/assets/works/malerei-6.jpg",
+      "title": "",
+      "medium": ""
+    },
+    {
+      "image": "/assets/works/malerei-7.jpg",
+      "title": "",
+      "medium": ""
+    }
   ],
   "keramik": [
-    { "image": "/assets/works/keramik-1.jpg", "title": "", "medium": "" },
-    { "image": "/assets/works/keramik-2.jpg", "title": "", "medium": "" },
-    { "image": "/assets/works/keramik-3.jpg", "title": "", "medium": "" },
-    { "image": "/assets/works/keramik-4.jpg", "title": "", "medium": "" },
-    { "image": "/assets/works/keramik-5.jpg", "title": "", "medium": "" }
+    {
+      "image": "/assets/works/keramik-1.jpg",
+      "title": "",
+      "medium": "",
+      "model": ""
+    },
+    {
+      "image": "/assets/works/keramik-2.jpg",
+      "title": "",
+      "medium": "",
+      "model": ""
+    },
+    {
+      "image": "/assets/works/keramik-3.jpg",
+      "title": "",
+      "medium": "",
+      "model": ""
+    },
+    {
+      "image": "/assets/works/keramik-4.jpg",
+      "title": "",
+      "medium": "",
+      "model": ""
+    },
+    {
+      "image": "/assets/works/keramik-5.jpg",
+      "title": "",
+      "medium": "",
+      "model": ""
+    }
   ]
 }

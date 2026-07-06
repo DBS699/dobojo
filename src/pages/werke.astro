@@ -118,8 +118,9 @@ const ORBIT_POS = [
       <div class="gallery-grid">
         {KERAMIK.map((w, i) => (
           <div data-reveal>
-            <button class="art-open" type="button" data-zoom={w.image} aria-label={`${w.title || `${T.untitled} ${roman(i)}`} vergrössern`}>
+            <button class="art-open" type="button" data-zoom={w.image} data-model={w.model || undefined} aria-label={`${w.title || `${T.untitled} ${roman(i)}`} ${w.model ? 'in 3D ansehen' : 'vergrössern'}`}>
               <div class="art-tile" data-art role="img" aria-label={w.title || `${T.untitled} ${roman(i)}`} style={`background-image:url('${w.image}')`}></div>
+              {w.model && <span class="art-3d-badge" aria-hidden="true">3D ⟲</span>}
             </button>
             <div class="art-caption">
               {w.title

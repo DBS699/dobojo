@@ -2,6 +2,8 @@
 // Fullscreen artwork lightbox — include once per page; picks up every element
 // with [data-zoom] (value = full image URL) in DOM order. Caption comes from
 // data-caption, or a sibling .art-caption row (language-aware), else stays empty.
+// Openers with [data-model] (GLB URL) show an interactive 3D viewer instead —
+// model-viewer is lazy-loaded only on pages that actually have a 3D work.
 ---
 
 <dialog class="lightbox" data-lightbox>
@@ -9,6 +11,16 @@
   <button class="lb-prev" type="button" aria-label="Vorheriges Bild">←</button>
   <figure class="lb-figure">
     <img class="lb-img" alt="" />
+    <model-viewer
+      class="lb-model"
+      loading="eager"
+      camera-controls
+      auto-rotate
+      auto-rotate-delay="1500"
+      shadow-intensity="1"
+      exposure="1"
+      interaction-prompt="none"
+      hidden></model-viewer>
     <figcaption class="lb-cap"></figcaption>
   </figure>
   <button class="lb-next" type="button" aria-label="Nächstes Bild">→</button>
@@ -19,9 +31,13 @@
   const lb = document.querySelector('[data-lightbox]') as HTMLDialogElement | null;
   if (lb) {
     const img = lb.querySelector('.lb-img') as HTMLImageElement;
+    const model = lb.querySelector('.lb-model') as HTMLElement & { src?: string };
     const cap = lb.querySelector('.lb-cap') as HTMLElement;
     const counter = lb.querySelector('.lb-counter') as HTMLElement;
     const openers = [...document.querySelectorAll<HTMLElement>('[data-zoom]')];
+
+    // load the (heavy) model-viewer element only when a 3D work exists on the page
+    if (openers.some((el) => el.dataset.model)) import('@google/model-viewer');
 
     const captionFor = (el: HTMLElement) => {
       if (el.dataset.caption) return el.dataset.caption;
@@ -38,7 +54,17 @@
     const show = (i: number) => {
       idx = (i + openers.length) % openers.length;
       const el = openers[idx];
-      img.src = el.dataset.zoom || '';
+      const is3d = !!el.dataset.model;
+      img.hidden = is3d;
+      model.hidden = !is3d;
+      if (is3d) {
+        // setAttribute, not the property — the element may not be upgraded yet
+        model.setAttribute('src', el.dataset.model || '');
+        img.removeAttribute('src');
+      } else {
+        img.src = el.dataset.zoom || '';
+        model.removeAttribute('src');
+      }
       const c = captionFor(el);
       cap.textContent = c;
       cap.hidden = !c;
@@ -66,5 +92,6 @@
       if (e.key === 'ArrowRight') show(idx + 1);
     });
     lb.addEventListener('click', (e) => { if (e.target === lb) lb.close(); });
+    lb.addEventListener('close', () => model.removeAttribute('src'));
   }
 </script>
