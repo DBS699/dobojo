@@ -5,3 +5,5 @@ dist/
 .DS_Store
 .vercel
 .env*
+models-inbox/*
+!models-inbox/README.md

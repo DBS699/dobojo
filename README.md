@@ -54,3 +54,28 @@ Für direkten Versand: Gratis-Key auf [web3forms.com](https://web3forms.com) hol
 Sobald die Domain zeigt: in Vercel Domain hinzufügen und
 `site` in `astro.config.mjs`, `base_url`/`site_url` in `public/admin/config.yml`
 sowie `robots.txt` auf `https://www.dobojo.ch` umstellen. Die OAuth-App-URLs ebenfalls.
+
+## 3D-Skulpturen (Scaniverse / Polycam → Website)
+
+Die Keramik-Werke können ein interaktives 3D-Modell haben («3D»-Badge, drehen/zoomen in der Lightbox).
+
+**1. Scannen** (iPhone, App «Scaniverse» oder «Polycam», Photogrammetrie-Modus):
+Skulptur auf einen Hocker, weiches gleichmässiges Licht, langsam in 3 Höhen umkreisen
+(Augenhöhe / schräg oben / schräg unten). Die Skulptur nie bewegen — nur du bewegst dich.
+
+**2. Exportieren:** in der App als **GLB** exportieren und in `models-inbox/` legen
+(Ordner ist gitignored — Roh-Scans sind 50–300 MB und dürfen NIE direkt ins Repo/CMS).
+
+**3. Aufbereiten:**
+```bash
+npm run model -- models-inbox/scan.glb blaue-vase
+```
+→ komprimiert Mesh (Draco) + Texturen (WebP, max 2048px) nach
+`public/assets/models/blaue-vase.glb` (typisch 2–10 MB, ~15× kleiner).
+
+**4. Einbinden** (eines von beiden):
+- committen (`git add public/assets/models/… && git push`) und im CMS beim Werk
+  unter «3D-Modell» den Pfad `/assets/models/blaue-vase.glb` eintragen, **oder**
+- die aufbereitete GLB direkt im CMS-Feld «3D-Modell (GLB-Datei)» hochladen.
+
+Nach ~1 Minute ist das Werk mit 3D-Badge live.
