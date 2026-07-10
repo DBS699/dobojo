@@ -118,8 +118,22 @@ const ORBIT_POS = [
       <div class="gallery-grid">
         {KERAMIK.map((w, i) => (
           <div data-reveal>
-            <button class="art-open" type="button" data-zoom={w.image} data-model={w.model || undefined} aria-label={`${w.title || `${T.untitled} ${roman(i)}`} ${w.model ? 'in 3D ansehen' : 'vergrössern'}`}>
-              <div class="art-tile" data-art role="img" aria-label={w.title || `${T.untitled} ${roman(i)}`} style={`background-image:url('${w.image}')`}></div>
+            <button class="art-open" type="button" data-zoom={w.image || w.model} data-model={w.model || undefined} aria-label={`${w.title || `${T.untitled} ${roman(i)}`} ${w.model ? 'in 3D ansehen' : 'vergrössern'}`}>
+              {w.model ? (
+                <model-viewer
+                  class="art-tile art-tile-3d"
+                  src={w.model}
+                  poster={w.image || undefined}
+                  auto-rotate
+                  auto-rotate-delay="0"
+                  rotation-per-second="18deg"
+                  shadow-intensity="1"
+                  interaction-prompt="none"
+                  loading="lazy"
+                  aria-label={w.title || `${T.untitled} ${roman(i)}`}></model-viewer>
+              ) : (
+                <div class="art-tile" data-art role="img" aria-label={w.title || `${T.untitled} ${roman(i)}`} style={`background-image:url('${w.image}')`}></div>
+              )}
               {w.model && <span class="art-3d-badge" aria-hidden="true">3D ⟲</span>}
             </button>
             <div class="art-caption">

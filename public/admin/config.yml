@@ -44,7 +44,11 @@ collections:
             widget: list
             summary: "{{fields.title}} {{fields.image}}"
             fields:
-              - { name: image, label: "Bild", widget: image }
+              - name: image
+                label: "Foto (optional wenn 3D-Modell vorhanden — dient dann als Ladebild)"
+                widget: image
+                required: false
+                default: ""
               - { name: title, label: "Titel (leer = «Ohne Titel»)", widget: string, required: false, default: "" }
               - { name: medium, label: "Technik (leer = «Ton / Steinzeug»)", widget: string, required: false, default: "" }
               - name: model

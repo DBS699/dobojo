@@ -516,6 +516,14 @@ body.menu-open { overflow: hidden; }
   background: none;
   cursor: zoom-in;
 }
+.art-tile-3d {
+  /* live 3D tile: sculpture floats on the vermillion, no box shadow (the
+     transparent canvas would cast a rectangle); clicks go to the button */
+  display: block;
+  pointer-events: none;
+  background: transparent;
+  box-shadow: none;
+}
 .art-3d-badge {
   position: absolute;
   right: 12px;
