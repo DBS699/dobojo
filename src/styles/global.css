@@ -518,8 +518,12 @@ body.menu-open { overflow: hidden; }
 }
 .art-tile-3d {
   /* live 3D tile: sculpture floats on the vermillion, no box shadow (the
-     transparent canvas would cast a rectangle); clicks go to the button */
+     transparent canvas would cast a rectangle); clicks go to the button.
+     model-viewer ships a :host default of 300x150px — height:auto restores
+     the uniform 4:5 tile so the sculpture renders as big as the photos. */
   display: block;
+  height: auto;
+  aspect-ratio: 4 / 5;
   pointer-events: none;
   background: transparent;
   box-shadow: none;
