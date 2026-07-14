@@ -72,6 +72,12 @@
       "title": "",
       "medium": "",
       "model": "/assets/models/skulptur-pilot.glb"
+    },
+    {
+      "image": "/assets/works/keramik-7.jpg",
+      "title": "",
+      "medium": "",
+      "model": "/assets/models/skulptur-2.glb"
     }
   ]
 }
