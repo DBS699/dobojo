@@ -6,7 +6,7 @@ import sitemap from '@astrojs/sitemap';
 // `site` is the canonical URL: drives sitemap, canonical links and OG image URLs.
 // Update it to https://www.dobojo.ch once the custom domain is connected.
 export default defineConfig({
-  site: 'https://dobojo.vercel.app',
+  site: 'https://www.dobojo.ch',
   server: { port: 5190, host: true },
   integrations: [sitemap()],
 });

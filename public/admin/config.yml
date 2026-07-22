@@ -8,11 +8,11 @@ backend:
   name: github
   repo: DBS699/dobojo             # GitHub owner/repo
   branch: main
-  base_url: https://dobojo.vercel.app   # OAuth handler lives here (api/auth)
+  base_url: https://www.dobojo.ch   # OAuth handler lives here (api/auth)
   auth_endpoint: /api/auth
 
-site_url: https://dobojo.vercel.app
-display_url: https://dobojo.vercel.app
+site_url: https://www.dobojo.ch
+display_url: https://www.dobojo.ch
 
 # Hochgeladene Bilder werden ins Repo committet und von hier ausgeliefert.
 media_folder: "public/assets/uploads"

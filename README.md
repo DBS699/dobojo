@@ -14,7 +14,7 @@ npm run build      # → dist/
 
 ## Inhalte ändern (CMS)
 
-**https://dobojo.vercel.app/admin** → «Login with GitHub».
+**https://www.dobojo.ch/admin** → «Login with GitHub».
 Alles, was Doris ändern kann:
 
 | Bereich | Datei |
@@ -33,8 +33,8 @@ Nav-/Button-Beschriftungen sind bewusst nicht im CMS (`src/data/ui.js`).
 
 1. **GitHub OAuth App** erstellen: github.com → Settings → Developer settings →
    OAuth Apps → *New OAuth App*:
-   - Homepage URL: `https://dobojo.vercel.app`
-   - Authorization callback URL: `https://dobojo.vercel.app/api/callback`
+   - Homepage URL: `https://www.dobojo.ch`
+   - Authorization callback URL: `https://www.dobojo.ch/api/callback`
 2. Client-ID + neues Client-Secret kopieren.
 3. Im Vercel-Projekt `dobojo` → Settings → Environment Variables (Production + Preview):
    - `GITHUB_CLIENT_ID`

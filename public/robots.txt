@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin
 
-Sitemap: https://dobojo.vercel.app/sitemap-index.xml
+Sitemap: https://www.dobojo.ch/sitemap-index.xml
