@@ -78,6 +78,12 @@
       "title": "",
       "medium": "",
       "model": "/assets/models/skulptur-2.glb"
+    },
+    {
+      "image": "/assets/works/keramik-8.jpg",
+      "title": "",
+      "medium": "",
+      "model": "/assets/models/skulptur-3.glb"
     }
   ]
 }
