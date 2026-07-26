@@ -28,14 +28,7 @@ img { max-width: 100%; }
 a { color: inherit; }
 button { font: inherit; }
 
-/* fixed page frame */
-.page-frame {
-  position: fixed;
-  inset: 0;
-  border: 12px solid var(--frame);
-  pointer-events: none;
-  z-index: 100;
-}
+/* (fixed page frame removed by request — --frame token kept for reference) */
 
 /* ─── NAV ─── */
 .nav {
