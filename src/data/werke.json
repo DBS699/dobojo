@@ -134,6 +134,11 @@
       "image": "/assets/uploads/FullSizeRender-2.jpeg",
       "title": "The Happiness of Colors",
       "medium": "Acryl auf Leinwand 80 x 80cm"
+    },
+    {
+      "image": "/assets/uploads/FullSizeRender.jpeg",
+      "title": "Cooling off",
+      "medium": "Acryl auf Leinwand 80 x 100cm"
     }
   ],
   "keramik": [
@@ -184,6 +189,12 @@
       "title": "",
       "medium": "",
       "model": "/assets/models/skulptur-3.glb"
+    },
+    {
+      "image": "/assets/uploads/IMG_7725.jpeg",
+      "title": "Sauer dir",
+      "medium": "🦕",
+      "model": ""
     }
   ]
 }
