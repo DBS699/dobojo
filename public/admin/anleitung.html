@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>DOBOJO — Anleitung zum Inhalte verwalten</title>
+  <style>
+    :root { --v:#D6380C; --ink:#16140f; --cream:#FAF6EC; --blue:#35A9CC; }
+    * { box-sizing:border-box; }
+    body { margin:0; font:17px/1.6 -apple-system, "Helvetica Neue", Arial, sans-serif; color:var(--ink); background:#fff; }
+    header { background:var(--v); color:#fff; padding:36px 24px 30px; }
+    header h1 { margin:0 0 6px; font-size:30px; }
+    header p { margin:0; opacity:.92; max-width:760px; }
+    main { max-width:920px; margin:0 auto; padding:24px 24px 80px; }
+    nav.toc { display:flex; flex-wrap:wrap; gap:10px; margin:18px 0 34px; }
+    nav.toc a { background:var(--cream); color:var(--ink); text-decoration:none; padding:8px 14px; border-radius:999px; font-weight:600; font-size:15px; }
+    section { border-top:2px solid var(--cream); padding:32px 0; scroll-margin-top:16px; }
+    section h2 { font-size:24px; margin:0 0 4px; }
+    section h2 .tab { display:inline-block; background:var(--blue); color:#fff; font-size:13px; letter-spacing:.06em; text-transform:uppercase; padding:4px 10px; border-radius:6px; vertical-align:middle; margin-right:10px; }
+    section p { margin:8px 0 16px; }
+    section img { width:100%; height:auto; display:block; border:1px solid #ddd; border-radius:10px; box-shadow:0 10px 30px rgba(22,20,15,.12); }
+    .tip { background:var(--cream); border-left:6px solid var(--blue); padding:16px 20px; border-radius:8px; margin-top:12px; }
+    .tip strong { display:block; margin-bottom:6px; }
+    ol { padding-left:22px; }
+    .back { display:inline-block; margin-top:20px; font-weight:600; color:var(--v); }
+    @media (max-width:600px) { body { font-size:16px; } header h1 { font-size:24px; } }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Anleitung: Inhalte auf dobojo.ch verwalten</h1>
+  <p>Jeder Reiter im Verwaltungsbereich bearbeitet einen bestimmten Teil der Website. Hier siehst du für jeden Reiter ein Bild davon, wo die Änderung sichtbar wird.</p>
+</header>
+<main>
+  <nav class="toc">
+    <a href="#werke">Werke (Galerie)</a>
+    <a href="#seitenbilder">Seiten-Bilder &amp; Kontakt</a>
+    <a href="#texte">Texte</a>
+    <a href="#lebenslauf">Lebenslauf</a>
+    <a href="#ausstellungen">Ausstellungen</a>
+    <a href="#partner">Partner*innen</a>
+    <a href="#speichern">Tipps zum Speichern</a>
+  </nav>
+
+  <section id="werke">
+    <h2><span class="tab">Reiter</span>Werke (Galerie)</h2>
+    <p>Die Galerie auf der Seite «Werke» — getrennt in <strong>Malerei</strong> und <strong>Keramik &amp; Skulpturen</strong>. Hier kommen neue Bilder dazu, mit Titel und Technik. Jedes Werk erscheint als gleich grosse Kachel; beim Anklicken öffnet sich das ganze Bild (bei Skulpturen mit 3D-Modell das drehbare Modell).</p>
+    <img src="/admin/guide/werke.jpg" alt="Galerie auf der Seite Werke" />
+    <div class="tip"><strong>So sieht es aus:</strong> Titel und Technik stehen unter jeder Kachel. Leer gelassen erscheint «Ohne Titel» bzw. die Standard-Technik.</div>
+  </section>
+
+  <section id="seitenbilder">
+    <h2><span class="tab">Reiter</span>Seiten-Bilder &amp; Kontakt</h2>
+    <p>Die grossen Bilder auf der <strong>Startseite</strong> (die drei Collage-Bilder, die zwei Karten «Malerei»/«Keramik», die Fotos im Abschnitt «Über mich»), die Fotos auf «Über mich» und «Kontakt» — sowie E-Mail-Adresse, Instagram und Atelier-Adresse.</p>
+    <img src="/admin/guide/start.jpg" alt="Startseite mit Collage" />
+    <p style="margin-top:20px">Unten auf der Kontaktseite erscheinen Adresse, E-Mail und Instagram aus diesem Reiter:</p>
+    <img src="/admin/guide/kontakt.jpg" alt="Kontaktseite" />
+  </section>
+
+  <section id="texte">
+    <h2><span class="tab">Reiter</span>Texte (4 Sprachen)</h2>
+    <p>Alle Sätze, die von dir stammen: das Credo oben auf der Startseite, der «Über mich»-Text (Startseite und eigene Seite), die Einleitungen auf «Werke», «Kontakt» und «Partner*innen». Deutsch ist die Hauptsprache — Englisch, Französisch und Italienisch sind eingeklappt darunter und dürfen leer bleiben (dann wird der deutsche Text gezeigt).</p>
+    <img src="/admin/guide/texte.jpg" alt="Seite Über mich mit Texten" />
+  </section>
+
+  <section id="lebenslauf">
+    <h2><span class="tab">Reiter</span>Lebenslauf</h2>
+    <p>Die Stationen deines Lebenslaufs (Jahr + Text), die auf «Über mich» als Zeitstrahl erscheinen — am Computer beim Scrollen von rechts hereingleitend, auf dem Handy als Karten zum Wischen.</p>
+    <img src="/admin/guide/lebenslauf.jpg" alt="Lebenslauf-Zeitstrahl" />
+  </section>
+
+  <section id="ausstellungen">
+    <h2><span class="tab">Reiter</span>Ausstellungen</h2>
+    <p>Die beiden Listen unten auf «Über mich»: <strong>Einzelausstellungen</strong> und <strong>Gemeinschaftsausstellungen</strong> — jeweils Jahr und Ort. Neue Einträge am besten oben einfügen (neueste zuerst).</p>
+    <img src="/admin/guide/ausstellungen.jpg" alt="Ausstellungslisten" />
+  </section>
+
+  <section id="partner">
+    <h2><span class="tab">Reiter</span>Partner*innen</h2>
+    <p>Die Karten auf der Seite «Partner*innen»: Name, Website-Link, Stichwort und Beschreibung. Beim Anklicken öffnet sich die Website der Partnerin / des Partners.</p>
+    <img src="/admin/guide/partner.jpg" alt="Partnerseite" />
+  </section>
+
+  <section id="speichern">
+    <h2><span class="tab">Tipps</span>Speichern &amp; Fehler</h2>
+    <ol>
+      <li>Nach dem Speichern dauert es <strong>etwa eine Minute</strong>, bis die Änderung auf der Website sichtbar ist. Website danach neu laden.</li>
+      <li>Wenn du den Verwaltungsbereich länger nicht benutzt hast: <strong>Seite einmal neu laden</strong> (Taste F5 oder ⌘R), bevor du etwas änderst.</li>
+      <li>Erscheint beim Speichern ein Fehler: <strong>zurück zur Liste</strong> (Pfeil oben links), den Eintrag <strong>neu öffnen</strong> und nochmals speichern. Fehlt das neu hinzugefügte Bild danach, einfach nochmals hinzufügen — es ist nichts kaputt, das Bild war nur noch nicht gespeichert.</li>
+      <li>Bilder direkt vom Handy oder Computer hochladen — Format und Grösse werden automatisch angepasst.</li>
+    </ol>
+    <a class="back" href="/admin/">← Zurück zum Verwaltungsbereich</a>
+  </section>
+</main>
+</body>
+</html>

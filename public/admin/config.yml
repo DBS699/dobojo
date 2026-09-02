@@ -23,6 +23,7 @@ locale: de
 collections:
   - name: werke
     label: "Werke (Galerie)"
+    description: "Galerie auf der Seite «Werke»: Bilder, Titel und Technik deiner Malerei und Keramik. [→ So sieht dieser Teil auf der Website aus](/admin/anleitung.html#werke)"
     icon: imagesmode
     files:
       - name: werke
@@ -60,6 +61,7 @@ collections:
 
   - name: seitenbilder
     label: "Seiten-Bilder & Kontakt"
+    description: "Die grossen Bilder auf Start-, Über-mich- und Kontaktseite sowie E-Mail, Instagram und Adresse. [→ So sieht dieser Teil auf der Website aus](/admin/anleitung.html#seitenbilder)"
     icon: photo_camera
     files:
       - name: site
@@ -89,6 +91,7 @@ collections:
 
   - name: texte
     label: "Texte"
+    description: "Deine Texte auf allen Seiten (Credo, Über mich, Einleitungen) — Deutsch ist die Hauptsprache, die anderen Sprachen dürfen leer bleiben. [→ So sieht dieser Teil auf der Website aus](/admin/anleitung.html#texte)"
     icon: edit_note
     files:
       - name: texts
@@ -130,6 +133,7 @@ collections:
 
   - name: lebenslauf
     label: "Lebenslauf"
+    description: "Die Stationen deines Lebenslaufs auf der Seite «Über mich». [→ So sieht dieser Teil auf der Website aus](/admin/anleitung.html#lebenslauf)"
     icon: timeline
     files:
       - name: vita
@@ -150,6 +154,7 @@ collections:
 
   - name: ausstellungen
     label: "Ausstellungen"
+    description: "Einzel- und Gemeinschaftsausstellungen, unten auf «Über mich». [→ So sieht dieser Teil auf der Website aus](/admin/anleitung.html#ausstellungen)"
     icon: museum
     files:
       - name: exhibitions
@@ -175,6 +180,7 @@ collections:
 
   - name: partner
     label: "Partner*innen"
+    description: "Die Karten auf der Seite «Partner*innen». [→ So sieht dieser Teil auf der Website aus](/admin/anleitung.html#partner)"
     icon: handshake
     files:
       - name: partners
