@@ -7,3 +7,4 @@ dist/
 .env*
 models-inbox/*
 !models-inbox/README.md
+public/assets/thumbs/
