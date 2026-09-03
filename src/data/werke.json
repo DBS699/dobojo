@@ -144,6 +144,16 @@
       "image": "/assets/uploads/IMG_0434.jpeg",
       "title": "Innen oder Aussen",
       "medium": "Acryl auf Leinwand 80 x 80cm"
+    },
+    {
+      "image": "/assets/uploads/IMG_2628.jpeg",
+      "title": "living love",
+      "medium": "Acryl auf Leinwand 100 x 120cm"
+    },
+    {
+      "image": "/assets/uploads/FullSizeRender-3.jpeg",
+      "title": "Summertime",
+      "medium": "Acryl auf Leinwand 100 x 120cm"
     }
   ],
   "keramik": [
@@ -194,6 +204,12 @@
       "title": "",
       "medium": "",
       "model": "/assets/models/skulptur-3.glb"
+    },
+    {
+      "image": "/assets/uploads/IMG_7725.jpeg",
+      "title": "Sauer dir",
+      "medium": "🦕",
+      "model": ""
     }
   ]
 }
